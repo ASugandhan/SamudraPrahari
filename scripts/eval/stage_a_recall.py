@@ -89,7 +89,11 @@ def main() -> int:
         cached.append((r["source_dataset"], amap, _gt_boxes(r["label_path"], size)))
     print(f"images: {len(cached)}  (split={a.split})")
 
-    thresholds = [round(t, 3) for t in np.linspace(0.10, 0.50, 9)]
+    # adaptive threshold grid from the anomaly-map value distribution (model-agnostic:
+    # a fixed 0.10-0.50 grid is mis-ranged when a better-reconstructing model has smaller errors)
+    sample = np.concatenate([a.ravel()[::53] for _, a, _ in cached]) if cached else np.array([0.1])
+    qs = [0.50, 0.70, 0.80, 0.90, 0.95, 0.97, 0.99, 0.995, 0.999]
+    thresholds = sorted({round(float(np.quantile(sample, q)), 4) for q in qs})
 
     def eval_thr(thr, subset):
         gt_total = hits = false_cands = 0

@@ -9,9 +9,12 @@ detector:
   compare_with: yolov8n.pt     # run both, record both (master prompt T2.3)
   imgsz: 640
   epochs: 100
-  # sonar-safe augmentation ONLY (no hue/colour — sonar is single-channel intensity)
-  augment: {fliplr: 0.5, flipud: 0.0, hsv_h: 0.0, hsv_s: 0.0, hsv_v: 0.2,
-            translate: 0.05, scale: 0.2, mosaic: 0.0}
+  # sonar-safe augmentation ONLY (master prompt T2.3): flip ALONG-track (vertical=flipud),
+  # small brightness, mild scale/translate. NO across-track flip (fliplr swaps port/starboard
+  # -> flips the shadow side), NO hue/sat/colour (sonar is single-channel), NO mosaic/rotate/shear.
+  augment: {flipud: 0.5, fliplr: 0.0, hsv_h: 0.0, hsv_s: 0.0, hsv_v: 0.2,
+            degrees: 0.0, translate: 0.05, scale: 0.2, shear: 0.0, perspective: 0.0,
+            mosaic: 0.0, mixup: 0.0}
   report: per-class AP/P/R, mAP50, mAP50-95 on TEST split
   note: >
     ghost_net/pipe/cylinder are SYNTHETIC (R4) — report their metrics separately

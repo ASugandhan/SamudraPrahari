@@ -14,7 +14,7 @@
     "version": "v1"
   },
   "stage_a_ae": {
-    "date": "2026-09-30",
+    "date": "2026-09-29",
     "inputs": [
       "input"
     ],
@@ -24,7 +24,7 @@
       "output"
     ],
     "sha256": "3dba8729b855ec9b27d639dd4412060baffa211133b83cd3f3245f2cef3454b8",
-    "trained_on": "AI4Shipwrecks extras/terrain (REAL object-free) \u2014 retrain",
+    "trained_on": "AnomalyScreen normal_seabed (synthetic, object-free)",
     "version": "v1"
   }
 }

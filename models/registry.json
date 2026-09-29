@@ -23,8 +23,8 @@
     "outputs": [
       "output"
     ],
-    "sha256": "1f556c74b76a37b96045e19dfbead0d747b1229175b73182b1a453bede818565",
-    "trained_on": "synthetic_seabed_200",
+    "sha256": "0fbaa7abc614d791cf97d2d4b1001d946dfb9fe70c3ab92f56585f48ab195295",
+    "trained_on": "AnomalyScreen normal_seabed (synthetic, hardened retrain)",
     "version": "v1"
   }
 }

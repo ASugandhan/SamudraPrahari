@@ -1,8 +1,10 @@
 # uploaded datasets — indexed via committed manifests, images never committed (T0.2)
 Samudra_Prahari_Dataset_v2/
 Ultimate_Marine_Dataset/
+AI4Shipwrecks/
 _resplit/
 *.zip
+*.env
 
 # data & weights (large / not versioned)
 data/raw/

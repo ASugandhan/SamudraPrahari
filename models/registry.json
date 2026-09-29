@@ -1,0 +1,30 @@
+{
+  "dummy": {
+    "date": "2026-09-29",
+    "inputs": [
+      "x"
+    ],
+    "metrics_file": null,
+    "onnx_path": "models/dummy.onnx",
+    "outputs": [
+      "y"
+    ],
+    "sha256": "d0e0e652fb6d5c8c5970e07b8c4f866e5c8d2bbe30e5666ee7fd2844e563999c",
+    "trained_on": null,
+    "version": "v1"
+  },
+  "stage_a_ae": {
+    "date": "2026-09-29",
+    "inputs": [
+      "input"
+    ],
+    "metrics_file": "out/metrics_t21.json",
+    "onnx_path": "models/stage_a_ae.onnx",
+    "outputs": [
+      "output"
+    ],
+    "sha256": "1f556c74b76a37b96045e19dfbead0d747b1229175b73182b1a453bede818565",
+    "trained_on": "synthetic_seabed_200",
+    "version": "v1"
+  }
+}

@@ -1,0 +1,51 @@
+# Colab training wiring for the uploaded data (T0.2 → T2.1/T2.3/T3.1).
+# Points each model at the leak-free 70/15/15 re-split. GPU runs happen on Colab
+# (notebooks/train_real_data.ipynb); the agent cannot run these locally.
+
+# T2.3 — YOLO11n detector (5 classes)
+detector:
+  data: _resplit/detection/data.yaml
+  model: yolo11n.pt            # COCO-pretrained init (literature: large mAP gain on SSS)
+  compare_with: yolov8n.pt     # run both, record both (master prompt T2.3)
+  imgsz: 640
+  epochs: 100
+  # sonar-safe augmentation ONLY (no hue/colour — sonar is single-channel intensity)
+  augment: {fliplr: 0.5, flipud: 0.0, hsv_h: 0.0, hsv_s: 0.0, hsv_v: 0.2,
+            translate: 0.05, scale: 0.2, mosaic: 0.0}
+  report: per-class AP/P/R, mAP50, mAP50-95 on TEST split
+  note: >
+    ghost_net/pipe/cylinder are SYNTHETIC (R4) — report their metrics separately
+    from real shipwreck/aircraft. pipe20xx (unverified) sits entirely in train.
+
+# T3.1 — UNet segmentation
+segmentation:
+  data: _resplit/segmentation/data.yaml
+  encoder: resnet18            # ImageNet-pretrained, lightweight
+  loss: dice+bce
+  epochs: 100
+  AWAITING_REAL_MASKS: true    # <-- Segmentation is SYNTHETIC-ONLY (0 real shipwreck masks)
+  note: >
+    Real UNet IoU (T3.1 headline) CANNOT be produced from this data. Download
+    AI4Shipwrecks masks (https://umfieldrobotics.github.io/ai4shipwrecks/), place at
+    dataset/AI4Shipwrecks/train/{images,labels}, re-run the seg build, then re-index.
+
+# T2.1 — convolutional autoencoder anomaly screen
+anomaly:
+  # HARDENED recipe — see notebooks/train_anomaly_ae.ipynb (the first AE collapsed to mid-grey).
+  train_images: _resplit/anomaly/images/train   # object-free seabed
+  val_images: _resplit/anomaly/images/val
+  loss: ssim+l1
+  epochs: 100                    # was 30 -> collapsed; longer + augmented
+  channels: [32, 64, 128, 256]   # was (16,32) -> too little capacity; real 40x40 bottleneck
+  batch: 16
+  lr: 1.0e-3
+  collapse_std_floor: 0.02       # refuse to export if val reconstruction std < this
+  augment: [hflip, vflip, rot90, brightness]   # sonar-safe; 140 tiles is small
+  auroc_eval: tile-level, object-free (anomaly test) vs object (detection test crops); target >= 0.80
+  note: >
+    Seabed is SYNTHETIC (sim-to-real gap may inflate false alarms). Treat the
+    false-alarm number as a smoke test until real AI4Shipwrecks extras/terrain is used.
+
+export:
+  format: onnx                 # opset 13, ir_version <=13 (register_model.py, R11)
+  register: scripts/register_model.py

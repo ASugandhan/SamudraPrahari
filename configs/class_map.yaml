@@ -1,0 +1,33 @@
+# Class map + provenance for the uploaded Samudra_Prahari_Dataset_v2 (T0.2).
+#
+# The dataset is already YOLO-format with canonical class names, so class ids map
+# 1:1 to canonical classes (no renaming needed). What matters here is PROVENANCE:
+# real vs synthetic vs unverified, reported separately downstream (Rule R4).
+
+canonical: [shipwreck, aircraft, pipe, cylinder, ghost_net]
+
+# YOLO class-index -> canonical name, per component data.yaml
+detection_names:   [shipwreck, aircraft, pipe, cylinder, ghost_net]   # nc=5
+segmentation_names: [shipwreck, ghost_net]                            # nc=2
+
+# filename-prefix -> {origin, classes it carries}. origin ∈ real|synthetic|unverified (R4)
+sources:
+  ai4:                 {origin: real,        classes: [shipwreck]}   # AI4Shipwrecks-derived (boxes)
+  sctd:                {origin: real,        classes: [shipwreck, aircraft]}  # SCTD
+  pipe20xx:            {origin: unverified,  classes: [pipe]}        # provenance unclear (README)
+  pure_synth_subpipe:  {origin: synthetic,  classes: [pipe]}        # physics-engine render
+  pure_synth_uatd:     {origin: synthetic,  classes: [cylinder]}    # physics-engine render
+  synth_net:           {origin: synthetic,  classes: [ghost_net]}   # scripts/synth_net.py
+  normal_seabed:       {origin: synthetic,  classes: []}            # AnomalyScreen object-free
+
+# Grouping unit for the leak-free re-split (Rule R5):
+#   ai4      -> per SITE  (ai4_<Site>, e.g. ai4_DM_Wilson) — sites never straddle splits
+#   sctd     -> per IMAGE (independent labelled frames; no sequence metadata available)
+#   pipe20xx -> ONE group (all year-2010, unverified provenance -> conservatively leak-safe)
+#   synthetic-> per IMAGE (each render independent)
+#
+# Honest caveats carried from DATASET_README.md:
+#   - ghost_net is synthetic proof-of-concept only (no public SSS ghost-net dataset exists).
+#   - Segmentation ships 0 real shipwreck masks (only synthetic ghost_net) — real UNet IoU
+#     (T3.1) stays AWAITING a real AI4Shipwrecks mask download.
+#   - AnomalyScreen seabed is synthetic; a sim-to-real gap may inflate false alarms (T2.1).

@@ -1,0 +1,17 @@
+# No-reference tile quality gate (T1.7). Threshold is calibrated on 60 human labels
+# (scripts/label_quality.py + scripts/eval/quality_eval.py) and written back here.
+
+weights:            # must sum to 1.0 -> quality_score in [0,1]
+  snr: 0.30
+  contrast: 0.25
+  edge_density: 0.20
+  dropout: 0.15       # scored as (1 - dropout_fraction)
+  saturation: 0.10    # scored as (1 - saturation_fraction)
+
+# normalisation constants for the interpretable proxies
+snr_half: 1.0         # snr_norm = snr / (snr + snr_half)
+edge_ref: 0.15        # edge_norm = min(1, edge_density / edge_ref)
+sat_level: 2          # pixels within sat_level of 0/255 count as saturated
+
+threshold: 0.404
+                      # (placeholder; overwritten by quality_eval.py calibration)

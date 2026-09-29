@@ -1,0 +1,16 @@
+{
+  "dummy": {
+    "date": "2026-09-29",
+    "inputs": [
+      "x"
+    ],
+    "metrics_file": null,
+    "onnx_path": "models/dummy.onnx",
+    "outputs": [
+      "y"
+    ],
+    "sha256": "d0e0e652fb6d5c8c5970e07b8c4f866e5c8d2bbe30e5666ee7fd2844e563999c",
+    "trained_on": null,
+    "version": "v1"
+  }
+}

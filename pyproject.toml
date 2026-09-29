@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "samudra"
+version = "0.1.0"
+description = "Samudra Prahari — AI underwater marine debris & anomaly detection from side-scan sonar"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy",
+    "scipy",
+    "pillow",
+    "opencv-python-headless",
+    "pyyaml",
+    "pydantic>=2",
+]
+
+[project.optional-dependencies]
+ingest = ["pyxtf"]
+models = ["onnx", "onnxruntime"]
+dev = ["pytest", "ruff"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+extend-exclude = [".venv", "notebooks", "web", "data", "models"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

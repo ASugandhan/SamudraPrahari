@@ -1,0 +1,40 @@
+# All preprocessing thresholds live here (Rule R9). Code reads these; no constants.
+
+bottom_tracking:
+  smooth_win: 5           # per-ping intensity smoothing window (px)
+  rise_frac: 0.35         # first-return threshold as fraction of (row max - row min)
+  min_grad_frac: 0.05     # min positive gradient (fraction of row range) to count as a rise
+  min_altitude_px: 3      # ignore returns closer than this to nadir (water column floor)
+  median_win: 7           # cross-ping median filter window to kill spikes
+  max_jump_px: 15         # clamp ping-to-ping altitude jump after median filter
+
+slant_range:
+  # ground = sqrt(slant^2 - altitude^2); pixels with slant < altitude are masked.
+  fill_value: 0
+
+nadir:
+  pad_px: 2               # extra pixels masked either side of the altitude gap
+
+gain:
+  angle_bins: 64          # incidence-angle bins for BAC
+  range_bins: 64          # range bins for EGN
+  fft_notch_frac: 0.02    # half-width of the along-track stripe notch (fraction of height)
+  eps: 1.0e-6
+
+despeckle:
+  method: lee             # lee | frost
+  win: 5                  # filter window
+  frost_damp: 2.0         # Frost damping factor (used when method=frost)
+
+contrast:
+  clip_lo_pct: 1
+  clip_hi_pct: 99
+  clahe_clip: 2.0
+  clahe_grid: 8
+
+# quality gate lives in configs/quality.yaml (T1.7)
+
+tiling:
+  size: 640
+  overlap: 0.20           # 20% overlap
+  min_valid_frac: 0.10    # skip tiles that are almost entirely masked

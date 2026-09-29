@@ -1,0 +1,16 @@
+# Stage A — "is anything here?" thresholds (Rule R9).
+
+anomaly:
+  model_name: stage_a_ae      # resolved to onnx_path via models/registry.json
+  smooth_sigma: 4.0           # gaussian smoothing of the reconstruction-error map
+  # AE was trained on [0,1] grayscale 640x640 tiles (sigmoid output) -> input is /255.
+  input_norm: div255
+
+candidates:
+  threshold: 0.250            # PROVISIONAL — picked pre-AE-retrain off a synthetic-inflated
+                              # curve; recalibrate once the collapsed T2.1 AE is retrained (T2.2 BLOCKED)
+  morph_kernel: 5             # open+close kernel (px) to clean the thresholded mask
+  min_area_px: 64             # drop blobs smaller than this (px) when resolution unknown
+  min_area_m2: 0.25           # used instead of px when slant/along resolution is known
+  max_area_frac: 0.85         # drop only near-whole-tile blobs (degenerate, not a localisation);
+                              # 0.85 keeps every real GT hittable (largest sctd wreck = 0.78 frac)

@@ -1,0 +1,38 @@
+# uploaded datasets — indexed via committed manifests, images never committed (T0.2)
+Samudra_Prahari_Dataset_v2/
+Ultimate_Marine_Dataset/
+_resplit/
+*.zip
+
+# data & weights (large / not versioned)
+data/raw/
+data/processed/
+data/**/*.png
+data/**/*.jpg
+data/**/*.tif
+data/**/*.xtf
+data/**/*.jsf
+!data/manifests/
+!data/known_objects/*.geojson
+models/*.onnx
+models/*.onnx.data
+models/*.npz
+models/*.pt
+*.pth
+
+# python
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# outputs
+out/
+reports/e2e/
+
+# os / editor
+.DS_Store
+*.swp
+T2.1_anomaly_dataset/

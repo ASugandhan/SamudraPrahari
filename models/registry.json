@@ -26,5 +26,19 @@
     "sha256": "3dba8729b855ec9b27d639dd4412060baffa211133b83cd3f3245f2cef3454b8",
     "trained_on": "AI4Shipwrecks extras/terrain (REAL object-free) \u2014 retrain",
     "version": "v1"
+  },
+  "yolo11n": {
+    "date": "2026-09-30",
+    "inputs": [
+      "images"
+    ],
+    "metrics_file": "out/metrics_t23.json",
+    "onnx_path": "models/stage_b_yolo11n.onnx",
+    "outputs": [
+      "output0"
+    ],
+    "sha256": "8ac1a7df1b48798fafdd82c4401a8bae0bfbb74d5fc9979298e7905faaccb5bc",
+    "trained_on": "Detection re-split (real+synth, R4)",
+    "version": "v1"
   }
 }

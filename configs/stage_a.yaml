@@ -16,3 +16,7 @@ candidates:
   min_area_m2: 0.25           # used instead of px when slant/along resolution is known
   max_area_frac: 0.85         # drop only near-whole-tile blobs (degenerate, not a localisation);
                               # 0.85 keeps every real GT hittable (largest sctd wreck = 0.78 frac)
+
+fusion:                       # T2.4 — merge YOLO boxes ∪ AE anomaly candidates
+  merge_iou: 0.5              # YOLO box & AE candidate with IoU >= this -> one "both" candidate
+

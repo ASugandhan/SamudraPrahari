@@ -15,4 +15,5 @@
 | T1.8 Pipeline + tiling | PASS | round-trip 0px; single pipeline fn + fixed order; 4000×2000 in 3.18s; 8 tests | 2026-09-29 |
 | T2.1 Autoencoder [COLAB] | ACCEPTED (gate unmet, by decision) | v3 real-terrain AE reconstructs (confound gone); accepted as anomaly-only/UNKNOWN screen — real validation is T4.2, not tile-AUROC. Don't quote its recall | 2026-09-30 |
 | T2.2 Candidates | ACCEPTED (gate unmet, by decision) | code+eval complete; feeds origin="anomaly" candidates to UNKNOWN pool (T2.4→T4.2); standalone recall weak by design. Don't quote it | 2026-09-30 |
-| T2.3 YOLO11n [COLAB] | AWAITING_HUMAN_RUN | notebook (YOLO11n+YOLOv8n, sonar-safe aug) + yolo_eval.py (per-class R4, per-source R5) + 3 tests built; metrics after Colab run | 2026-09-30 |
+| T2.3 YOLO11n [COLAB] | PASS | SCTD test mAP50 0.947 (≥0.85, ~lit); YOLO11n 0.846 > YOLOv8n 0.814; ONNX 10.9MB CPU; ai4 tiny-box 0.131 (honest); synth 0.95–0.995 separate (R4) | 2026-09-30 |
+| T2.4 Fusion | PASS | fused recall 0.802 ≥ max(YOLO 0.749, AE 0.671); dup 0.032 ≤0.05; anomaly_only pool 4037→UNKNOWN (weak-AE noise, prune downstream); 5 tests | 2026-09-30 |

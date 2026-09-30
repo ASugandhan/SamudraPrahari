@@ -20,17 +20,22 @@ detector:
     ghost_net/pipe/cylinder are SYNTHETIC (R4) — report their metrics separately
     from real shipwreck/aircraft. pipe20xx (unverified) sits entirely in train.
 
-# T3.1 — UNet segmentation
+# T3.1 — UNet segmentation on REAL AI4Shipwrecks masks (notebooks/train_unet.ipynb)
 segmentation:
-  data: _resplit/segmentation/data.yaml
-  encoder: resnet18            # ImageNet-pretrained, lightweight
+  ai4_root: AI4Shipwrecks       # real shipwreck images+masks: train/{images,labels}, test/{...}
+  encoder: resnet18             # ImageNet-pretrained, lightweight (smp)
+  crop: 512                     # square crop size (full surveys are ~5579x1728 -> tiled)
+  stride: 384                   # tiling stride
   loss: dice+bce
-  epochs: 100
-  AWAITING_REAL_MASKS: true    # <-- Segmentation is SYNTHETIC-ONLY (0 real shipwreck masks)
+  epochs: 60
+  batch: 8
+  lr: 1.0e-3
+  metric: IoU + F1 of the POSITIVE class only (R3 — never pixel accuracy)
+  benchmark: "SOTA ~0.445 IoU (SOD), UNet ~0.411 (AI4Shipwrecks paper); target >= 0.40"
   note: >
-    Real UNet IoU (T3.1 headline) CANNOT be produced from this data. Download
-    AI4Shipwrecks masks (https://umfieldrobotics.github.io/ai4shipwrecks/), place at
-    dataset/AI4Shipwrecks/train/{images,labels}, re-run the seg build, then re-index.
+    REAL shipwreck masks now available locally (AI4Shipwrecks/). This is the real IoU headline.
+    The synthetic ghost_net YOLO-seg set (Samudra_Prahari_Dataset_v2/Segmentation) is a SEPARATE,
+    synthetic-only result (R4) — not this UNet's real number.
 
 # T2.1 — convolutional autoencoder anomaly screen
 anomaly:

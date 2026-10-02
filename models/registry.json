@@ -27,6 +27,20 @@
     "trained_on": "AI4Shipwrecks extras/terrain (REAL object-free) \u2014 retrain",
     "version": "v1"
   },
+  "unet": {
+    "date": "2026-09-30",
+    "inputs": [
+      "input"
+    ],
+    "metrics_file": "out/metrics_t31.json",
+    "onnx_path": "models/stage_b_unet.onnx",
+    "outputs": [
+      "logits"
+    ],
+    "sha256": "e24bed2ad24181fe46988fe17048990dc84af0660b8c761152a934d4472399be",
+    "trained_on": "AI4Shipwrecks real masks (train); fp16 for edge (R11)",
+    "version": "v1"
+  },
   "yolo11n": {
     "date": "2026-09-30",
     "inputs": [

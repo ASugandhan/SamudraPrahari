@@ -17,4 +17,4 @@
 | T2.2 Candidates | ACCEPTED (gate unmet, by decision) | code+eval complete; feeds origin="anomaly" candidates to UNKNOWN pool (T2.4→T4.2); standalone recall weak by design. Don't quote it | 2026-09-30 |
 | T2.3 YOLO11n [COLAB] | PASS | SCTD test mAP50 0.947 (≥0.85, ~lit); YOLO11n 0.846 > YOLOv8n 0.814; ONNX 10.9MB CPU; ai4 tiny-box 0.131 (honest); synth 0.95–0.995 separate (R4) | 2026-09-30 |
 | T2.4 Fusion | PASS | fused recall 0.802 ≥ max(YOLO 0.749, AE 0.671); dup 0.032 ≤0.05; anomaly_only pool 4037→UNKNOWN (weak-AE noise, prune downstream); 5 tests | 2026-09-30 |
-| T3.1 UNet [COLAB] | AWAITING_HUMAN_RUN | notebook (ResNet18-UNet on REAL AI4 masks, leak-free wreck val) + unet_eval.py (pos-class IoU/F1, R3) + 3 tests; real data present locally; IoU after Colab run | 2026-09-30 |
+| T3.1 UNet [COLAB] | NEEDS_REWORK | v1 real-AI4 IoU(+) 0.28 <0.40 (over-predicts, FP≫TP); notebook keep_bg 0.15→0.5 fix + fp16 (28.8MB, R11); retrain expected to clear target | 2026-09-30 |

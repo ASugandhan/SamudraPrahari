@@ -16,8 +16,6 @@ data/**/*.xtf
 data/**/*.jsf
 !data/manifests/
 !data/known_objects/*.geojson
-models/*.onnx
-models/*.onnx.data
 models/*.npz
 models/*.pt
 *.pth
